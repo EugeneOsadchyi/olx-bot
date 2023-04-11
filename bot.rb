@@ -1,11 +1,16 @@
 require_relative 'olx_search_crawler'
 require 'telegram/bot'
+require 'logger'
 
-token = '631711838:AAEyXiiBq4d46BXwZtiJsDnL2WkvursaJaI'
+BOT_TOKEN = '<TOKEN>'
 
-Telegram::Bot::Client.run(token) do |bot|
+logger = Logger.new('usage.log', 'daily')
+logger.info("Starting...")
+
+Telegram::Bot::Client.run(BOT_TOKEN) do |bot|
   bot.listen do |message|
-    warn "New request from #{message.from.first_name} #{message.from.last_name} (#{message.from.username}) - #{message.text}"
+    logger.info("New request from #{message.from.first_name} #{message.from.last_name} (#{message.from.username}) - #{message.text}")
+    warn
 
     case message.text
     when '/start'
